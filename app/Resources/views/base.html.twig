@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
-            {% stylesheets '@bootstrap_css' %}
+            {% stylesheets '@AppBundle/Resources/public/css/*' %}
                 <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
             {% endstylesheets %}
         {% endblock %}
@@ -13,8 +13,8 @@
     <body>
         {% block body %}{% endblock %}
         {% block javascripts %}
-            {% javascripts '@jquery' '@bootstrap_js' %}
-                <script type="text/javascript" src="{{ asset_url }}"></script>
+            {% javascripts '@AppBundle/Resources/public/js/*' %}
+                <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
         {% endblock %}
     </body>
