@@ -1,0 +1,30 @@
+{% extends "AppBundle:Default:main.html.twig" %}
+
+{% block content %}
+    <h1 class="page-header">Katalog produktów</h1>
+    <a href="{{ path('productNew') }}" class="btn btn-default">Nowy</a>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Nazwa</th>
+            <th>J.m.</th>
+        </tr>
+        </thead>
+        <tbody>
+    {% for p in products %}
+        <tr>
+            <td>{{ p.id }}</td>
+            <td>{{ p.name }}</td>
+            <td>{{ p.unit }}</td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="2" class="text-capitalize text-muted">
+                Nie zdefiniowano jeszcze żadnych produktów
+            </td>
+        </tr>
+    {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

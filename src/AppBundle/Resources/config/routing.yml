@@ -3,6 +3,7 @@ homepage:
   defaults: { _controller: AppBundle:Default:index }
   methods:  [GET]
 
+# warehouse
 warehouseList:
   path: /warehouse
   defaults: { _controller: AppBundle:Warehouse:list }
@@ -13,12 +14,13 @@ warehouseNew:
   defaults: { _controller: AppBundle:Warehouse:new }
   methods:  [GET, POST]
 
-warehouseGet:
-  path: /warehouse/{id}
-  defaults: { _controller: AppBundle:Warehouse:get }
+# Products
+productList:
+  path: /product
+  defaults: { _controller: AppBundle:Product:list }
   methods:  [GET]
 
-warehouseEdit:
-  path: /warehouse/{id}
-  defaults: { _controller: AppBundle:Warehouse:edit }
-  methods:  [POST]
+productNew:
+  path: /product/new
+  defaults: { _controller: AppBundle:Product:new }
+  methods:  [GET, POST]
