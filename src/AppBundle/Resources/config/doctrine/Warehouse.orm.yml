@@ -1,0 +1,16 @@
+AppBundle\Entity\Warehouse:
+    type: entity
+    table: warehouse
+    repositoryClass: AppBundle\Entity\Repository\WarehouseRepository
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        name:
+            type: string
+            length: 100
+            nullable: false
+        isDefault:
+            type: boolean
+            nullable: false

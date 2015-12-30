@@ -1,0 +1,13 @@
+{% extends "AppBundle:Default:main.html.twig" %}
+
+{% block content %}
+    <h1 class="page-header">Magazyny</h1>
+    {% for wh in warehouses %}
+        <div class="row">
+            <h4>{{ wh.name }}
+            <small>{{ wh.isDefault }}</small></h4>
+        </div>
+    {% else %}
+        <div class="alert alert-info">Nie zdefiniowano jeszcze żadnego magazynu</div>
+    {% endfor %}
+{% endblock %}
