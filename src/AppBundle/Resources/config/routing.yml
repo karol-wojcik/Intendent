@@ -24,3 +24,14 @@ productNew:
   path: /product/new
   defaults: { _controller: AppBundle:Product:new }
   methods:  [GET, POST]
+
+# Contractor
+contractorList:
+  path: /contractor
+  defaults: { _controller: AppBundle:Contractor:list }
+  methods:  [GET]
+
+contractorNew:
+  path: /contractor/new
+  defaults: { _controller: AppBundle:Contractor:new }
+  methods:  [GET, POST]

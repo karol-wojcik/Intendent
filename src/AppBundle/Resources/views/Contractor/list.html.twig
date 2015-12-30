@@ -1,27 +1,25 @@
 {% extends "AppBundle:Default:main.html.twig" %}
 
 {% block content %}
-    <h1 class="page-header">Katalog produktów</h1>
-    <a href="{{ path('productNew') }}" class="btn btn-default">Nowy</a>
+    <h1 class="page-header">Kontrahenci</h1>
+    <a href="{{ path('contractorNew') }}" class="btn btn-default">Nowy</a>
     <table class="table">
         <thead>
         <tr>
             <th>#</th>
             <th>Nazwa</th>
-            <th>J.m.</th>
         </tr>
         </thead>
         <tbody>
-    {% for p in products %}
+    {% for c in contractors %}
         <tr>
-            <td>{{ p.id }}</td>
-            <td>{{ p.name }}</td>
-            <td>{{ p.unit }}</td>
+            <td>{{ c.id }}</td>
+            <td>{{ c.name }}</td>
         </tr>
     {% else %}
         <tr>
             <td colspan="2" class="text-center text-muted">
-                <i>Nie zdefiniowano jeszcze żadnych produktów</i>
+                <i>Nie zdefiniowano jeszcze żadnych kontrahentów</i>
             </td>
         </tr>
     {% endfor %}

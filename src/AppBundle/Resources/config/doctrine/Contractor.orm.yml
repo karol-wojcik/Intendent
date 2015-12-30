@@ -1,0 +1,13 @@
+AppBundle\Entity\Contractor:
+    type: entity
+    table: contractor
+    repositoryClass: AppBundle\Entity\Repository\ContractorRepository
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        name:
+            type: string
+            length: 100
+            nullable: false

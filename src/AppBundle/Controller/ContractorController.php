@@ -9,39 +9,39 @@
 namespace AppBundle\Controller;
 
 
-use AppBundle\Entity\Product;
-use AppBundle\Form\Type\ProductType;
+use AppBundle\Entity\Contractor;
+use AppBundle\Form\Type\ContractorType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class ProductController extends Controller
+class ContractorController extends Controller
 {
 	public function listAction(Request $request)
 	{
 		$em = $this->getDoctrine()->getManager();
-		$products = $em->getRepository('AppBundle:Product')
+		$contractors = $em->getRepository('AppBundle:Contractor')
 			->findAllOrderedByName();
 
-		return $this->render('AppBundle:Product:list.html.twig', array(
-			'products' => $products,
+		return $this->render('AppBundle:Contractor:list.html.twig', array(
+			'contractors' => $contractors,
 		));
 	}
 
 	public function newAction(Request $request)
 	{
-		$product = new Product();
-		$form = $this->createForm(new ProductType(), $product);
+		$contractor = new Contractor();
+		$form = $this->createForm(new ContractorType(), $contractor);
 
 		$form->handleRequest($request);
 		if ($form->isSubmitted() && $form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
-			$em->persist($product);
+			$em->persist($contractor);
 			$em->flush();
 
-			return $this->redirectToRoute('productList');
+			return $this->redirectToRoute('contractorList');
 		}
 
-		return $this->render('AppBundle:Product:new.html.twig', array(
+		return $this->render('AppBundle:Contractor:new.html.twig', array(
 			'form' => $form->createView(),
 		));
 	}
