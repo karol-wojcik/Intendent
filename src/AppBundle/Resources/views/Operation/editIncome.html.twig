@@ -1,0 +1,14 @@
+{% extends "AppBundle:Default:main.html.twig" %}
+
+{% block title %}Edycja przyjęcia magazynowego - {{ parent() }}{% endblock %}
+
+{% block content %}
+    <h1 class="page-header">Edycja przyjęcia magazynowego</h1>
+
+    {% include 'AppBundle:Operation:formIncome.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% include 'AppBundle:Operation:formJsIncome.html.twig' %}
+{% endblock %}

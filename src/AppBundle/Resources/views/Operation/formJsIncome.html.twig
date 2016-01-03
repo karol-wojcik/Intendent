@@ -1,0 +1,49 @@
+<script>
+    var $collectionHolder;
+    $(document).ready(function() {
+        // Get the ul that holds the collection of tags
+        $collectionHolder = $('table.productsTbl');
+
+        // count the current form inputs we have (e.g. 2), use that as the new
+        // index when inserting a new item (e.g. 2)
+        $collectionHolder.data('index', $collectionHolder.find('tbody tr').length);
+
+        $('.addProductBtn').on('click', function(e) {
+            // prevent the link from creating a "#" on the URL
+            e.preventDefault();
+
+            // add a new tag form (see next code block)
+            addTagForm($collectionHolder);
+        });
+
+        $('body').on('click', '.removeProductBtn', function(e) {
+            removeProduct($(this).closest('tr'));
+        });
+    });
+
+    function addTagForm($collectionHolder) {
+        // Get the data-prototype explained earlier
+        var prototype = $collectionHolder.data('prototype');
+
+        // get the new index
+        var index = $collectionHolder.data('index');
+
+        // Replace '__name__' in the prototype's HTML to
+        // instead be a number based on how many items we have
+        var newForm = prototype.replace(/__name__/g, index);
+        var newIdx = index + 1;
+        newForm = '<td>' + newIdx + '</td>' + newForm;
+        console.log(newForm);
+
+        $collectionHolder.data('index', newIdx);
+
+        var $newFormRow = $('<tr></tr>').append(newForm);
+        $collectionHolder.find('tbody').append($newFormRow);
+    }
+
+    function removeProduct($row) {
+        $row.remove();
+        var index = $collectionHolder.data('index');
+        $collectionHolder.data('index', index - 1);
+    }
+</script>

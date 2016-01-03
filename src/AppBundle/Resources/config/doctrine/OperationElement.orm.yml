@@ -1,0 +1,37 @@
+AppBundle\Entity\OperationElement:
+    type: entity
+    table: operation_element
+    repositoryClass: AppBundle\Entity\Repository\OperationElementRepository
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        basePrice:
+            type: decimal
+            precision: 10
+            scale: 2
+            nullable: false
+        quantity:
+            type: decimal
+            precision: 10
+            scale: 2
+            nullable: false
+        value:
+            type: decimal
+            precision: 10
+            scale: 2
+            nullable: false
+    manyToOne:
+        operation:
+            targetEntity: Operation
+            inversedBy: elements
+            joinColumn:
+                name: operation_id
+                referencedColumnName: id
+        product:
+            targetEntity: Product
+            fetch: EAGER
+            joinColumn:
+                name: product_id
+                referencedColumnName: id

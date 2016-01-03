@@ -35,3 +35,34 @@ contractorNew:
   path: /contractor/new
   defaults: { _controller: AppBundle:Contractor:new }
   methods:  [GET, POST]
+
+# Operations
+incomeList:
+  path: /income
+  defaults: { _controller: AppBundle:Operation:incomeList }
+  methods:  [GET]
+
+incomeNew:
+  path: /income/new
+  defaults: { _controller: AppBundle:Operation:incomeNew }
+  methods:  [GET, POST]
+
+incomeEdit:
+  path: /income/{operationId}
+  defaults: { _controller: AppBundle:Operation:incomeEdit }
+  methods:  [GET, POST]
+
+outcomeList:
+  path: /outcome
+  defaults: { _controller: AppBundle:Operation:outcomeList }
+  methods:  [GET]
+
+outcomeNew:
+  path: /outcome/new
+  defaults: { _controller: AppBundle:Operation:outcomeNew }
+  methods:  [GET, POST]
+
+outcomeEdit:
+  path: /outcome/{operationId}
+  defaults: { _controller: AppBundle:Operation:outcomeEdit }
+  methods:  [GET, POST]

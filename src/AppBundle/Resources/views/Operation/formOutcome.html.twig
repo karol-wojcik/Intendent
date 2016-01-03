@@ -1,0 +1,74 @@
+{{ form_start(form, {'attr': {'class': 'form-horizontal', 'role': 'form' } } ) }}
+{{ form_row(form._token) }}
+{{ form_errors(form) }}
+
+<div class="form-group">
+    <label class="col-sm-2 control-label required">Data</label>
+    {#{{ form_label(form.operationDate, null, {'label_attr': {'class': 'col-sm-2 control-label'}}) }}#}
+    <div class="col-sm-10">
+        <div class="row">
+            <div class="col-xs-4 col-md-2">
+                {{ form_widget(form.operationDate.day, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="col-xs-4 col-md-2">
+                {{ form_widget(form.operationDate.month, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="col-xs-4 col-md-2">
+                {{ form_widget(form.operationDate.year, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+        {{ form_errors(form.operationDate) }}
+    </div>
+</div>
+<div class="form-group">
+    <label for="operation_contractor" class="col-sm-2 control-label required">Kontrahent</label>
+    {#{{ form_label(form.contractor, null, {'label_attr': {'class': 'col-sm-2 control-label'}}) }}#}
+    <div class="col-sm-10">
+        {{ form_widget(form.contractor, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.contractor) }}
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Produkty
+    </div>
+    <div class="panel-body">
+        <table class="table table-condensed table-striped productsTbl" data-prototype="{{
+            '<td>' ~ form_widget(form.elements.vars.prototype.product, {'attr': {'class': 'form-control'}}) ~ ' </td>' ~
+            '<td>' ~ form_widget(form.elements.vars.prototype.basePrice, {'attr': {'class': 'form-control'}}) ~ ' </td>' ~
+            '<td>' ~ form_widget(form.elements.vars.prototype.quantity, {'attr': {'class': 'form-control'}}) ~ ' </td>' ~
+            '<td>' ~ form_widget(form.elements.vars.prototype.value, {'attr': {'class': 'form-control'}}) ~ ' </td>' ~
+            '<td class="text-center"><button type="button" class="btn btn-danger removeProductBtn" title="Usuń">X</button></td>'
+        }}">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Produkt</th>
+                <th>Cena jedn.</th>
+                <th>Ilość</th>
+                <th>Wartość</th>
+                <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for element in form.elements %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ form_widget(element.product, {'attr': {'class': 'form-control'}}) }}</td>
+                    <td>{{ form_widget(element.basePrice, {'attr': {'class': 'form-control'}}) }}</td>
+                    <td>{{ form_widget(element.quantity, {'attr': {'class': 'form-control'}}) }}</td>
+                    <td>{{ form_widget(element.value, {'attr': {'class': 'form-control'}}) }}</td>
+                    <td class="text-center"><button type="button" class="btn btn-danger removeProductBtn" title="Usuń">X</button></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-primary addProductBtn">Dodaj</button>
+    </div>
+</div>
+<div class="form-group">
+    <a href="{{ path('incomeList') }}" class="btn btn-link">Powrót</a>
+    {{ form_widget(form.save, {'attr': {'class': 'btn btn-default'}}) }}
+</div>
+{{ form_end(form, {'render_rest': false}) }}

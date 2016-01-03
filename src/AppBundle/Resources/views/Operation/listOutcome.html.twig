@@ -1,0 +1,50 @@
+{% extends "AppBundle:Default:main.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        tr.clickableRow {
+            cursor: pointer;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <h1 class="page-header">Wydanie towaru</h1>
+    <a href="{{ path('outcomeNew') }}" class="btn btn-default">Dodaj</a>
+    <table class="table table-hover table-condensed">
+        <thead>
+        <tr>
+            <th class="text-center">#</th>
+            <th class="text-center">Data</th>
+            <th class="text-right">Kwota</th>
+        </tr>
+        </thead>
+        <tbody>
+    {% for o in operations %}
+        <tr class="clickableRow" data-href="{{ path('outcomeEdit', {'operationId': o.id }) }}">
+            <td class="text-center">{{ o.id }}</td>
+            <td class="text-center">{{ o.operationDate|date("d/m/Y") }}</td>
+            <td class="text-right">{{ o.totalAmount|number_format(2) }} zł</td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="2" class="text-center text-muted">
+                <i>Nie masz jeszcze żadnych wydań towaru</i>
+            </td>
+        </tr>
+    {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            $('.clickableRow').on('click', function(e) {
+                window.document.location = $(this).data("href");
+            });
+        });
+    </script>
+{% endblock %}

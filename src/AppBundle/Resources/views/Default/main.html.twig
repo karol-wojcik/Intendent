@@ -20,14 +20,14 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Strona główna</a></li>
-                        <li><a href="#">Ustawienia</a></li>
-                        <li><a href="#">Profil</a></li>
-                        <li><a href="#">Pomoc</a></li>
+                        {#<li><a href="{{ path('homepage') }}">Strona główna</a></li>#}
+                        {#<li><a href="{{ path('fos_user_profile_show') }}">Profil</a></li>#}
+                        <li><a href="{{ path('fos_user_security_logout') }}">Wyloguj</a></li>
+                        {#<li><a href="#">Pomoc</a></li>#}
                     </ul>
-                    <form class="navbar-form navbar-right">
-                        <input type="text" class="form-control" placeholder="Szukaj...">
-                    </form>
+                    {#<form class="navbar-form navbar-right">#}
+                        {#<input type="text" class="form-control" placeholder="Szukaj...">#}
+                    {#</form>#}
                 </div>
             </div>
         </nav>
@@ -40,19 +40,16 @@
                 <div class="col-sm-3 col-md-2 sidebar">
                 {% block navigation %}
                     <ul class="nav nav-sidebar">
-                        <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-                        <li><a href="#">Reports</a></li>
-                        <li><a href="#">Analytics</a></li>
-                        <li><a href="#">Export</a></li>
-                    </ul>
-                    <ul class="nav nav-sidebar">
-                        <li><a href="{{ path('productList') }}">Katalog produktów</a></li>
-                        <li><a href="{{ path('contractorList') }}">Konrahenci</a></li>
-                        <li><a href="{{ path('warehouseList') }}">Magazyn</a></li>
-                        <li><a href="">Nav item again</a></li>
-                        <li><a href="">One more nav</a></li>
-                        <li><a href="">Another nav item</a></li>
-                        <li><a href="">More navigation</a></li>
+                        <li class="{% if app.request.attributes.get('_route') == 'incomeList' %}active{% endif %}">
+                            <a href="{{ path('incomeList') }}">Przyjęcie towaru</a></li>
+                        <li class="{% if app.request.attributes.get('_route') == 'outcomeList' %}active{% endif %}">
+                            <a href="{{ path('outcomeList') }}">Wydanie towaru</a></li>
+                        <li class="{% if app.request.attributes.get('_route') == 'productList' %}active{% endif %}">
+                            <a href="{{ path('productList') }}">Katalog produktów</a></li>
+                        <li class="{% if app.request.attributes.get('_route') == 'contractorList' %}active{% endif %}">
+                            <a href="{{ path('contractorList') }}">Kontrahenci</a></li>
+                        <li class="{% if app.request.attributes.get('_route') == 'warehouseList' %}active{% endif %}">
+                            <a href="{{ path('warehouseList') }}">Magazyn</a></li>
                     </ul>
                 {% endblock %}
                 </div>

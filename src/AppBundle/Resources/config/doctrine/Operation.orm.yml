@@ -1,0 +1,56 @@
+AppBundle\Entity\Operation:
+    type: entity
+    table: operation
+    repositoryClass: AppBundle\Entity\Repository\OperationRepository
+    lifecycleCallbacks:
+        prePersist: [updatedTimestamps]
+        preUpdate: [updatedTimestamps]
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        type:
+            type: string
+            length: 20
+            nullable: false
+        operationDate:
+            type: date
+            nullable: false
+        externalId:
+            type: string
+            length: 30
+            nullable: true
+        totalAmount:
+            type: decimal
+            precision: 10
+            scale: 2
+            nullable: false
+        createdAt:
+            type: datetimetz
+            nullable: false
+        updatedAt:
+            type: datetimetz
+            nullable: false
+    manyToOne:
+        warehouse:
+            targetEntity: Warehouse
+            joinColumn:
+                name: warehouse_id
+                referencedColumnName: id
+        operator:
+            targetEntity: User
+            joinColumn:
+                name: operator_id
+                referencedColumnName: id
+        contractor:
+            targetEntity: Contractor
+            fetch: EAGER
+            joinColumn:
+                name: contractor_id
+                referencedColumnName: id
+    oneToMany:
+        elements:
+            targetEntity: OperationElement
+            mappedBy: operation
+            cascade: [persist]
