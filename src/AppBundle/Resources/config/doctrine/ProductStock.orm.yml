@@ -1,0 +1,29 @@
+AppBundle\Entity\ProductStock:
+    type: entity
+    table: product_stock
+    repositoryClass: AppBundle\Entity\Repository\ProductStockRepository
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        stock:
+            type: decimal
+            precision: 20
+            scale: 3
+            nullable: false
+        stockDate:
+            type: datetimetz
+            nullable: false
+    manyToOne:
+        operation:
+            targetEntity: Operation
+            joinColumn:
+                name: operation_id
+                referencedColumnName: id
+        product:
+            targetEntity: Product
+            fetch: EAGER
+            joinColumn:
+                name: product_id
+                referencedColumnName: id

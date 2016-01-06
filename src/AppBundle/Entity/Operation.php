@@ -253,4 +253,9 @@ class Operation
 			$this->setCreatedAt(new \DateTime('now'));
 		}
 	}
+
+	public function isIncome()
+    {
+        return $this->type === self::TYPE_INCOME;
+    }
 }

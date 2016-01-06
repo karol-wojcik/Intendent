@@ -53,4 +53,5 @@ AppBundle\Entity\Operation:
         elements:
             targetEntity: OperationElement
             mappedBy: operation
+            indexBy: id
             cascade: [persist]

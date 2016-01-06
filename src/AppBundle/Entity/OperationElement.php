@@ -55,7 +55,7 @@ class OperationElement
 	}
 
 	/**
-	 * @return mixed
+	 * @return Product
 	 */
 	public function getProduct()
 	{
