@@ -1,7 +1,7 @@
-AppBundle\Entity\OperationElement:
+AppBundle\Entity\IncomeElement:
     type: entity
-    table: operation_element
-    repositoryClass: AppBundle\Entity\Repository\OperationElementRepository
+    table: income_element
+    repositoryClass: AppBundle\Entity\Repository\IncomeElementRepository
     id:
         id:
             type: integer
@@ -23,11 +23,11 @@ AppBundle\Entity\OperationElement:
             scale: 2
             nullable: false
     manyToOne:
-        operation:
-            targetEntity: Operation
+        income:
+            targetEntity: Income
             inversedBy: elements
             joinColumn:
-                name: operation_id
+                name: income_id
                 referencedColumnName: id
         product:
             targetEntity: Product

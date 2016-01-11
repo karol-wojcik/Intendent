@@ -23,13 +23,13 @@
         </tr>
         </thead>
         <tbody>
-    {% for o in operations %}
-        <tr class="clickableRow" data-href="{{ path('incomeEdit', {'operationId': o.id }) }}">
-            <td class="text-center">{{ o.id }}</td>
-            <td class="text-center">{{ o.externalId }}</td>
-            <td class="text-center">{{ o.operationDate|date("d/m/Y") }}</td>
-            <td>{{ o.contractor.name }}</td>
-            <td class="text-right">{{ o.totalAmount|number_format(2) }} zł</td>
+    {% for i in incomes %}
+        <tr class="clickableRow" data-href="{{ path('incomeEdit', {'id': i.id }) }}">
+            <td class="text-center">{{ i.id }}</td>
+            <td class="text-center">{{ i.externalId }}</td>
+            <td class="text-center">{{ i.incomeDate|date("d/m/Y") }}</td>
+            <td>{{ i.contractor.name }}</td>
+            <td class="text-right">{{ i.totalAmount|number_format(2) }} zł</td>
         </tr>
     {% else %}
         <tr>

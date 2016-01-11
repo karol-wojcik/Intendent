@@ -9,10 +9,10 @@
 namespace AppBundle\Entity;
 
 
-class OperationElement
+class IncomeElement
 {
 	protected $id;
-	protected $operation;
+	protected $income;
 	protected $product;
 	protected $basePrice;
 	protected $quantity;
@@ -39,18 +39,18 @@ class OperationElement
 	/**
 	 * @return mixed
 	 */
-	public function getOperation()
+	public function getIncome()
 	{
-		return $this->operation;
+		return $this->income;
 	}
 
 	/**
-	 * @param mixed $operation
+	 * @param mixed $income
 	 * @return $this
 	 */
-	public function setOperation($operation)
+	public function setIncome($income)
 	{
-		$this->operation = $operation;
+		$this->income = $income;
 		return $this;
 	}
 

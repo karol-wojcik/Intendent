@@ -36,20 +36,20 @@ contractorNew:
   defaults: { _controller: AppBundle:Contractor:new }
   methods:  [GET, POST]
 
-# Operations
+# Incomes
 incomeList:
   path: /income
-  defaults: { _controller: AppBundle:Operation:incomeList }
+  defaults: { _controller: AppBundle:Income:list }
   methods:  [GET]
 
 incomeNew:
   path: /income/new
-  defaults: { _controller: AppBundle:Operation:incomeNew }
+  defaults: { _controller: AppBundle:Income:new }
   methods:  [GET, POST]
 
 incomeEdit:
-  path: /income/{operationId}
-  defaults: { _controller: AppBundle:Operation:incomeEdit }
+  path: /income/{id}
+  defaults: { _controller: AppBundle:Income:edit }
   methods:  [GET, POST]
 
 outcomeList:

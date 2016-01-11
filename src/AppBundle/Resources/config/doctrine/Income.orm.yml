@@ -1,7 +1,7 @@
-AppBundle\Entity\Operation:
+AppBundle\Entity\Income:
     type: entity
-    table: operation
-    repositoryClass: AppBundle\Entity\Repository\OperationRepository
+    table: income
+    repositoryClass: AppBundle\Entity\Repository\IncomeRepository
     lifecycleCallbacks:
         prePersist: [updatedTimestamps]
         preUpdate: [updatedTimestamps]
@@ -10,11 +10,7 @@ AppBundle\Entity\Operation:
             type: integer
             generator: { strategy: AUTO }
     fields:
-        type:
-            type: string
-            length: 20
-            nullable: false
-        operationDate:
+        incomeDate:
             type: date
             nullable: false
         externalId:
@@ -51,7 +47,7 @@ AppBundle\Entity\Operation:
                 referencedColumnName: id
     oneToMany:
         elements:
-            targetEntity: OperationElement
-            mappedBy: operation
+            targetEntity: IncomeElement
+            mappedBy: income
             indexBy: id
             cascade: [persist]

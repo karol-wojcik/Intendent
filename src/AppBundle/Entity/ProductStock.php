@@ -15,7 +15,6 @@ class ProductStock
 	protected $stock;
 	protected $stockDate;
 	protected $product;
-	protected $operation;
 
     /**
      * ProductStock constructor.
@@ -96,22 +95,4 @@ class ProductStock
 		$this->stockDate = $stockDate;
 		return $this;
 	}
-
-    /**
-     * @return mixed
-     */
-    public function getOperation()
-    {
-        return $this->operation;
-    }
-
-    /**
-     * @param mixed $operation
-     * @return $this
-     */
-    public function setOperation($operation)
-    {
-        $this->operation = $operation;
-        return $this;
-    }
 }

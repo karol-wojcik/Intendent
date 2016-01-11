@@ -11,15 +11,11 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-class Operation
+class Income
 {
-	const TYPE_INCOME = 'income';
-	const TYPE_OUTCOME = 'outcome';
-
 	protected $id;
 	protected $externalId;
-	protected $operationDate;
-	protected $type;
+	protected $incomeDate;
 	protected $warehouse;
 	protected $operator;
 	protected $contractor;
@@ -70,24 +66,6 @@ class Operation
 	public function setExternalId($externalId)
 	{
 		$this->externalId = $externalId;
-		return $this;
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getType()
-	{
-		return $this->type;
-	}
-
-	/**
-	 * @param mixed $type
-	 * @return $this
-	 */
-	public function setType($type)
-	{
-		$this->type = $type;
 		return $this;
 	}
 
@@ -184,18 +162,18 @@ class Operation
 	/**
 	 * @return mixed
 	 */
-	public function getOperationDate()
+	public function getIncomeDate()
 	{
-		return $this->operationDate;
+		return $this->incomeDate;
 	}
 
 	/**
-	 * @param mixed $operationDate
+	 * @param mixed $incomeDate
 	 * @return $this
 	 */
-	public function setOperationDate($operationDate)
+	public function setIncomeDate($incomeDate)
 	{
-		$this->operationDate = $operationDate;
+		$this->incomeDate = $incomeDate;
 		return $this;
 	}
 
@@ -235,12 +213,12 @@ class Operation
         return $this;
     }
 
-    public function addElement(OperationElement $element)
+    public function addElement(IncomeElement $element)
     {
         $this->elements->add($element);
     }
 
-    public function removeElement(OperationElement $element)
+    public function removeElement(IncomeElement $element)
     {
         $this->elements->removeElement($element);
     }
@@ -253,9 +231,4 @@ class Operation
 			$this->setCreatedAt(new \DateTime('now'));
 		}
 	}
-
-	public function isIncome()
-    {
-        return $this->type === self::TYPE_INCOME;
-    }
 }

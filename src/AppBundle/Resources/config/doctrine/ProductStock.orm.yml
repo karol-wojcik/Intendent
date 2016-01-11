@@ -16,11 +16,6 @@ AppBundle\Entity\ProductStock:
             type: datetimetz
             nullable: false
     manyToOne:
-        operation:
-            targetEntity: Operation
-            joinColumn:
-                name: operation_id
-                referencedColumnName: id
         product:
             targetEntity: Product
             fetch: EAGER

@@ -12,12 +12,12 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class OperationType extends AbstractType
+class IncomeType extends AbstractType
 {
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
-			->add('operationDate', 'date', array(
+			->add('incomeDate', 'date', array(
                 'input'  => 'datetime',
                 'widget' => 'choice',
                 'format' => 'dd/MMMM/yyyy'
@@ -30,7 +30,7 @@ class OperationType extends AbstractType
 				'choice_label' => 'name'
 			))
             ->add('elements', 'collection', array(
-				'entry_type' => new OperationElementType(),
+				'entry_type' => new IncomeElementType(),
 				'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false
@@ -44,7 +44,7 @@ class OperationType extends AbstractType
 	public function configureOptions(OptionsResolver $resolver)
 	{
 		$resolver->setDefaults(array(
-			'data_class' => 'AppBundle\Entity\Operation',
+			'data_class' => 'AppBundle\Entity\Income',
 		));
 	}
 }
