@@ -36,18 +36,14 @@
     <div class="panel-body">
         <table class="table table-condensed table-striped productsTbl" data-prototype="{{
             '<td>' ~ form_widget(form.elements.vars.prototype.product, {'attr': {'class': 'form-control'}}) ~ ' </td>' ~
-            '<td>' ~ form_widget(form.elements.vars.prototype.basePrice, {'attr': {'class': 'form-control'}}) ~ ' </td>' ~
             '<td>' ~ form_widget(form.elements.vars.prototype.quantity, {'attr': {'class': 'form-control'}}) ~ ' </td>' ~
-            '<td>' ~ form_widget(form.elements.vars.prototype.value, {'attr': {'class': 'form-control'}}) ~ ' </td>' ~
             '<td class="text-center"><button type="button" class="btn btn-danger removeProductBtn" title="Usuń">X</button></td>'
         }}">
             <thead>
             <tr>
                 <th>#</th>
                 <th>Produkt</th>
-                <th>Cena jedn.</th>
                 <th>Ilość</th>
-                <th>Wartość</th>
                 <th>&nbsp;</th>
             </tr>
             </thead>
@@ -56,9 +52,7 @@
                 <tr>
                     <td>{{ loop.index }}</td>
                     <td>{{ form_widget(element.product, {'attr': {'class': 'form-control'}}) }}</td>
-                    <td>{{ form_widget(element.basePrice, {'attr': {'class': 'form-control'}}) }}</td>
                     <td>{{ form_widget(element.quantity, {'attr': {'class': 'form-control'}}) }}</td>
-                    <td>{{ form_widget(element.value, {'attr': {'class': 'form-control'}}) }}</td>
                     <td class="text-center"><button type="button" class="btn btn-danger removeProductBtn" title="Usuń">X</button></td>
                 </tr>
             {% endfor %}
@@ -68,7 +62,7 @@
     </div>
 </div>
 <div class="form-group">
-    <a href="{{ path('incomeList') }}" class="btn btn-link">Powrót</a>
+    <a href="{{ path('outcomeList') }}" class="btn btn-link">Powrót</a>
     {{ form_widget(form.save, {'attr': {'class': 'btn btn-default'}}) }}
 </div>
 {{ form_end(form, {'render_rest': false}) }}

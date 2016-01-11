@@ -9,14 +9,11 @@
 namespace AppBundle\Controller;
 
 
-use AppBundle\Entity\Contractor;
 use AppBundle\Entity\Operation;
 use AppBundle\Entity\OperationElement;
 use AppBundle\Entity\ProductStock;
-use AppBundle\Form\Type\ContractorType;
 use AppBundle\Form\Type\OperationType;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\EntityNotFoundException;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,39 +34,7 @@ class OperationController extends Controller
 
 	public function incomeNewAction(Request $request)
 	{
-		return $this->newAction(Operation::TYPE_INCOME, $request);
-	}
-
-    public function incomeEditAction($operationId, Request $request)
-	{
-        return $this->editAction(Operation::TYPE_INCOME, $operationId, $request);
-	}
-
-
-	public function outcomeListAction(Request $request)
-	{
-		$em = $this->getDoctrine()->getManager();
-		$operations = $em->getRepository('AppBundle:Operation')
-				->findAllOutcomeByDate();
-
-		return $this->render('AppBundle:Operation:listOutcome.html.twig', array(
-			'operations' => $operations,
-		));
-	}
-
-	public function outcomeNewAction(Request $request)
-	{
-        return $this->newAction(Operation::TYPE_OUTCOME, $request);
-	}
-
-    public function outcomeEditAction($operationId, Request $request)
-    {
-        return $this->editAction(Operation::TYPE_OUTCOME, $operationId, $request);
-    }
-
-    private function newAction($type, Request $request)
-    {
-        $operation = $this->prepareOperationObject($type);
+        $operation = $this->prepareOperationObject(Operation::TYPE_INCOME);
         $form = $this->createForm(new OperationType(), $operation);
 
         $form->handleRequest($request);
@@ -90,19 +55,124 @@ class OperationController extends Controller
 
                 $em->getConnection()->commit();
 
-                return $this->redirectToRoute($type . 'List');
+                return $this->redirectToRoute('incomeList');
             } catch (Exception $exc) {
                 $em->getConnection()->rollBack();
                 throw $exc;
             }
         }
 
-        return $this->render('AppBundle:Operation:new' . ucfirst($type) . '.html.twig', array(
+        return $this->render('AppBundle:Operation:newIncome.html.twig', array(
+            'form' => $form->createView(),
+        ));
+	}
+
+    public function incomeEditAction($operationId, Request $request)
+	{
+        $em = $this->getDoctrine()->getManager();
+
+        $operation = $em->getRepository('AppBundle:Operation')->find($operationId);
+        if (!$operation) {
+            throw $this->createNotFoundException('Nie znaleziono dokumentu dla wybranego id: '.$operationId);
+        }
+        $originalElements = new ArrayCollection();
+        foreach ($operation->getElements() as $element) {
+            $originalElements->add($element);
+        }
+
+        $form = $this->createForm(new OperationType(), $operation);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->getConnection()->beginTransaction();
+            try {
+                // remove elements
+                foreach ($originalElements as $element) {
+                    if (false === $operation->getElements()->contains($element)) {
+                        $operation->removeElement($element);
+                        $em->remove($element);
+                    }
+                }
+
+                $total = 0;
+                /** @var OperationElement $element */
+                foreach ($operation->getElements() as $element) {
+                    $element->setOperation($operation);
+                    $em->persist($element);
+                    $total += $element->getValue();
+                }
+
+                $operation->setTotalAmount($total);
+                $em->persist($operation);
+                $em->flush();
+
+                $this->updateStock($operation);
+
+                $em->getConnection()->commit();
+
+                return $this->redirectToRoute('incomeList');
+            } catch (Exception $exc) {
+                $em->getConnection()->rollBack();
+                throw $exc;
+            }
+        }
+
+        return $this->render('AppBundle:Operation:editIncome.html.twig', array(
             'form' => $form->createView(),
         ));
     }
 
-    private function editAction($type, $operationId, Request $request)
+	public function outcomeListAction(Request $request)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$operations = $em->getRepository('AppBundle:Operation')
+				->findAllOutcomeByDate();
+
+		return $this->render('AppBundle:Operation:listOutcome.html.twig', array(
+			'operations' => $operations,
+		));
+	}
+
+	public function outcomeNewAction(Request $request)
+	{
+        $operation = $this->prepareOperationObject(Operation::TYPE_OUTCOME);
+        $form = $this->createForm(new OperationType(), $operation);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->getConnection()->beginTransaction();
+            try {
+                $total = 0;
+                $productIds = array();
+                /** @var OperationElement $element */
+                foreach($operation->getElements() as $element) {
+                    $total += $element->getValue();
+                    $productIds[] = $element->getProduct()->getId();
+                }
+                $currentStock = $em->getRepository('AppBundle:ProductStock')->findCurrentForMany($productIds);
+
+                $operation->setTotalAmount($total);
+                $em->persist($operation);
+                $em->flush();
+
+                $this->updateStock($operation);
+
+                $em->getConnection()->commit();
+
+                return $this->redirectToRoute('outcomeList');
+            } catch (Exception $exc) {
+                $em->getConnection()->rollBack();
+                throw $exc;
+            }
+        }
+
+        return $this->render('AppBundle:Operation:newOutcome.html.twig', array(
+            'form' => $form->createView(),
+        ));
+	}
+
+    public function outcomeEditAction($operationId, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -145,14 +215,14 @@ class OperationController extends Controller
 
                 $em->getConnection()->commit();
 
-                return $this->redirectToRoute($type . 'List');
+                return $this->redirectToRoute('outcomeList');
             } catch (Exception $exc) {
                 $em->getConnection()->rollBack();
                 throw $exc;
             }
         }
 
-        return $this->render('AppBundle:Operation:edit'.ucfirst($type).'.html.twig', array(
+        return $this->render('AppBundle:Operation:editOutcome.html.twig', array(
             'form' => $form->createView(),
         ));
     }
